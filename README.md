@@ -28,7 +28,7 @@ To test the script on your own computer before letting the cloud take over:
 2. Open the new `.env` file and paste your Discord URL:
    `DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/your-url-here`
 3. Open `uptime_monitor.py` and change the `url` and `expected_text` variable on line 23 to the website you want to monitor.
-*Note: The url and expected_text variables must be in quotes ""*
+*Note: The url and expected_text variables must be in quotes ""!*
 4. Run the script: `python uptime_monitor.py`
 
 *Note: The `.env` file is ignored by Git, so your private URL will never be uploaded to GitHub!*
