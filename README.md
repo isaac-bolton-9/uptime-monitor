@@ -2,14 +2,12 @@
 
 A lightweight Python script that monitors a website's status, logs the results to a local text file, and sends real-time webhook alerts if the site goes offline. 
 
-> **Note:** The webhook alerting feature is currently in development and will be added in an upcoming update!
-
 ## What it does
 1. Sends an HTTP request to a target URL (currently set to Google).
 2. Checks for a successful connection and a `200 OK` status code.
 3. Verifies that expected content (e.g., the word "Google") is actually present on the page.
 4. Appends the result, along with a formatted timestamp, to a local `uptime_log.txt` file.
-5. **[COMING SOON]** Triggers a webhook alert (e.g., Discord or Slack) if the site is unreachable or content is missing.
+5. Triggers a webhook alert (e.g., Discord) if the site is unreachable or content is missing.
 
 ## Prerequisites
 To run this script, you will need Python installed on your machine, along with the `requests` library.
@@ -29,6 +27,16 @@ Every time the script runs, it will print the result to your console and add a n
 Example log output:
 > 2026-03-09 17:00:00 - SUCCESS - Status Code: 200
 > 2026-03-09 17:05:00 - ERROR - Site loaded, but expected content missing
+
+## Setup: Discord Alerts (Optional)
+This monitor can automatically ping your Discord server when a website goes down. To set this up:
+
+1. Go to your Discord server settings, create a new Webhook, and copy the Webhook URL.
+2. Find the `.env.example` file in this repository and rename it to exactly `.env`.
+3. Open your new `.env` file and replace the placeholder text with your actual Discord URL, like this:
+   `DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/...`
+
+*Note: The `.env` file is ignored by Git, so your private URL will never be uploaded to GitHub!*
 
 ## Running with Docker
 If you prefer not to install Python or the required libraries directly on your computer, you can run this monitor inside an isolated Docker container.
