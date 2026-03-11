@@ -1,0 +1,28 @@
+name: Uptime Monitor
+
+# 1. THE ALARM CLOCK
+on:
+  schedule:
+    # Wake up at the top of every hour
+    - cron: '0 * * * *'
+  # Add a manual "Run Now" button to my GitHub page
+  workflow_dispatch:
+
+# 2. THE TO-DO LIST
+jobs:
+  run-monitor:
+    # Borrow a temporary Linux computer from GitHub
+    runs-on: ubuntu-latest 
+
+    steps:
+      # Step A: Download my project files
+      - name: Get code
+        uses: actions/checkout@v4
+
+      # Step B: Read my recipe and build the Docker box
+      - name: Build box
+        run: docker build -t uptime-monitor .
+
+      # Step C: Turn the box on
+      - name: Run script
+        run: docker run uptime-monitor
