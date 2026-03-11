@@ -20,7 +20,7 @@ def send_discord_alert(message):
 # ---------------------------------------
 
 # The URL we want to monitor
-url = "https://www.google.com/this-page-does-not-exist"
+url = "https://www.google.com"
 
 # 1. Grab the exact time the script runs and format it nicely
 timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
