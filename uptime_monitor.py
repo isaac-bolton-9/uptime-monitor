@@ -21,6 +21,8 @@ def send_discord_alert(message):
 
 # The URL we want to monitor
 url = "https://www.google.com"
+# The text we expect to see on the page
+expected_text = "Google"
 
 # 1. Grab the exact time the script runs and format it nicely
 timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -32,7 +34,7 @@ try:
     response.raise_for_status()
 
     # We capture our final message in a variable so we can print AND log it
-    if "Google" in response.text:
+    if expected_text in response.text:
         log_message = f"{timestamp} - SUCCESS - Status Code: {response.status_code}"
     else:
         log_message = f"{timestamp} - ERROR - Site loaded, but expected content missing"

@@ -1,50 +1,45 @@
-# Simple Python Uptime Monitor
+# 🌐 Automated Uptime Monitor
 
-A lightweight Python script that monitors a website's status, logs the results to a local text file, and sends real-time webhook alerts if the site goes offline. 
+A lightweight, containerized Python script that monitors a website's status and automatically sends alerts to a Discord channel if the site goes down. The entire process is automated in the cloud using GitHub Actions and Docker.
 
-## What it does
-1. Sends an HTTP request to a target URL (currently set to Google).
-2. Checks for a successful connection and a `200 OK` status code.
-3. Verifies that expected content (e.g., the word "Google") is actually present on the page.
-4. Appends the result, along with a formatted timestamp, to a local `uptime_log.txt` file.
-5. Triggers a webhook alert (e.g., Discord) if the site is unreachable or content is missing.
+## ✨ Features
+* **Automated Scheduling:** Runs automatically on a fixed schedule via GitHub Actions (no need to leave your computer on).
+* **Docker Containerization:** Runs in a perfectly clean, isolated environment every single time.
+* **Discord Integration:** Pings a private Discord channel immediately if the website returns an error or unexpected content.
+* **Secure Secrets:** Uses `.env` and GitHub Secrets to ensure your private Webhook URLs are never exposed to the public.
 
-## Prerequisites
-To run this script, you will need Python installed on your machine, along with the `requests` library.
+---
 
-You can install the required library using pip:
-`pip install requests`
+## 🚀 How to Use This Project
 
-## How to Use
-1. Clone this repository to your local machine.
-2. Open your terminal and navigate to the project folder.
-3. Run the script:
-   `python uptime_monitor.py`
+If you want to use this monitor for your own website, follow these steps:
 
-## Output
-Every time the script runs, it will print the result to your console and add a new line to `uptime_log.txt`. 
+### 1. Fork and Clone
+Fork this repository to your own GitHub account, then clone it to your local machine.
 
-Example log output:
-> 2026-03-09 17:00:00 - SUCCESS - Status Code: 200
-> 2026-03-09 17:05:00 - ERROR - Site loaded, but expected content missing
+### 2. Set Up Your Discord Webhook
+1. Go to your Discord server settings.
+2. Navigate to **Integrations > Webhooks** and create a new Webhook.
+3. Copy the Webhook URL.
 
-## Setup: Discord Alerts (Optional)
-This monitor can automatically ping your Discord server when a website goes down. To set this up:
-
-1. Go to your Discord server settings, create a new Webhook, and copy the Webhook URL.
-2. Find the `.env.example` file in this repository and rename it to exactly `.env`.
-3. Open your new `.env` file and replace the placeholder text with your actual Discord URL, like this:
-   `DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/...`
+### 3. Local Setup (For Testing)
+To test the script on your own computer before letting the cloud take over:
+1. Find the `.env.example` file in the project folder and rename it to exactly `.env`.
+2. Open the new `.env` file and paste your Discord URL:
+   `DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/your-url-here`
+3. Open `uptime_monitor.py` and change the `url` and `expected_text` variable on line 23 to the website you want to monitor.
+*Note: The url and expected_text variables must be in quotes ""*
+4. Run the script: `python uptime_monitor.py`
 
 *Note: The `.env` file is ignored by Git, so your private URL will never be uploaded to GitHub!*
 
-## Running with Docker
-If you prefer not to install Python or the required libraries directly on your computer, you can run this monitor inside an isolated Docker container.
+### 4. Cloud Automation Setup (GitHub Actions)
+To let GitHub run this script automatically for you:
+1. Go to your GitHub repository in your web browser.
+2. Click on **Settings > Secrets and variables > Actions**.
+3. Click **New repository secret**.
+4. Name the secret exactly `DISCORD_WEBHOOK_URL`.
+5. Paste your Discord Webhook URL into the Secret box and save it.
+6. Push your updated code (with your target website URL) to GitHub.
 
-**1. Build the Docker image:**
-Open your terminal in the project folder and run:
-`docker build -t uptime-monitor .`
-
-**2. Run the container:**
-Once the build is finished, start the container with:
-`docker run uptime-monitor`
+By default, the GitHub Action is set to run manually (via the `workflow_dispatch` trigger). You can edit the `.github/workflows/uptime.yml` file to run on a cron schedule (e.g., every hour) if you prefer!
