@@ -5,7 +5,7 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # 3. Install our required library inside the box
-RUN pip install requests
+RUN pip install requests python-dotenv
 
 # 4. Copy your script from your computer into the box
 COPY uptime_monitor.py .
