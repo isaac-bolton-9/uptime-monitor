@@ -22,14 +22,22 @@ Fork this repository to your own GitHub account, then clone it to your local mac
 2. Navigate to **Integrations > Webhooks** and create a new Webhook.
 3. Copy the Webhook URL.
 
-### 3. Local Setup (For Testing)
-To test the script on your own computer before letting the cloud take over:
+### 3. Local Setup (Native Python)
+To test the script directly on your own computer:
 1. Find the `.env.example` file in the project folder and rename it to exactly `.env`.
 2. Open the new `.env` file and paste your Discord URL:
    `DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/your-url-here`
 3. Open `uptime_monitor.py` and change the `url` and `expected_text` variable on line 23 to the website you want to monitor.
 *Note: The url and expected_text variables must be in quotes ""!*
 4. Run the script: `python uptime_monitor.py`
+
+### Running Locally with Docker (Optional)
+If you prefer to run this in a clean container without installing Python tools directly to your machine:
+1. Make sure your `.env` file is set up (see above).
+2. Build the Docker image: 
+   `docker build -t uptime-monitor .`
+3. Run the container and pass it your hidden `.env` file: 
+   `docker run --env-file .env uptime-monitor`
 
 *Note: The `.env` file is ignored by Git, so your private URL will never be uploaded to GitHub!*
 
